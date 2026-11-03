@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surprise for Aruna </title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e6e6fa 0%, #d8bfd8 100%);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    perspective: 1000px;
+  }
+
+  .balloon {
+    position: absolute;
+    bottom: -100px;
+    width: 60px;
+    height: 75px;
+    border-radius: 50%;
+    animation: terbang 8s linear infinite;
+    z-index: 0;
+    opacity: 0.6;
+  }
+  .balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    width: 1px;
+    height: 25px;
+    background: rgba(75, 0, 130, 0.3);
+  }
+  .b1 { background: #b19cd9; left: 15%; animation-delay: 0s; }
+  .b2 { background: #ffd700; left: 35%; animation-delay: 3s; }
+  .b3 { background: #9370db; left: 65%; animation-delay: 1.5s; }
+  .b4 { background: #e6e6fa; left: 80%; animation-delay: 4s; border: 2px solid #b19cd9; }
+  .b5 { background: #dda0dd; left: 50%; animation-delay: 2s; }
+
+  @keyframes terbang {
+    0% { transform: translateY(0) rotate(-5deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(-120vh) rotate(5deg); opacity: 0; }
+  }
+
+  .gift-container {
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
+    width: 220px;
+    height: 220px;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+  .gift-container:hover { transform: scale(1.05); }
+  
+  .box {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 180px;
+    background: #9370db; 
+    border-radius: 10px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  }
+  
+  .box::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 100%;
+    background: #ffd700; 
+  }
+
+  .lid {
+    position: absolute;
+    top: 20px;
+    left: -10px;
+    width: 240px;
+    height: 50px;
+    background: #7b68ee; 
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 12;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .lid::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 100%;
+    background: #ffd700;
+  }
+  
+  .lid::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: #ffd700;
+    transform: translateY(-50%);
+  }
+
+  .bow {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 60px;
+    z-index: 13;
+    transition: opacity 0.5s;
+  }
+
+  .gift-container.open .lid { transform: translateY(-150px) rotate(-15deg); opacity: 0; }
+  .gift-container.open .bow { opacity: 0; }
+  .gift-container.hide { opacity: 0; pointer-events: none; transform: scale(0.8); }
+
+  .ticket-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    width: 90%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .ticket-card.show { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); z-index: 20; }
+
+  .ticket-header { background: #e6e6fa; padding: 15px 20px; text-align: center; border-bottom: 2px dashed #9370db; }
+  .ticket-header h1 { font-family: 'Playfair Display', serif; font-size: 24px; color: #4b0082; margin: 0; font-style: italic; }
+  .ticket-body { padding: 20px; display: flex; gap: 15px; align-items: flex-start; }
+  .ticket-fotos { display: flex; flex-direction: column; gap: 10px; width: 120px; flex-shrink: 0; }
+  .ticket-fotos img { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  .ticket-text { font-size: 12px; color: #333; line-height: 1.6; text-align: left; }
+  .ticket-text p { margin-top: 0; margin-bottom: 10px; }
+  .ticket-text b { color: #7b68ee; }
+  .ttd { font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; color: #4b0082; text-align: right; margin-top: 10px; }
+
+  .btn-tutup {
+    background: #9370db; color: white; border: none; padding: 12px; font-size: 14px; font-weight: 600;
+    font-family: 'Poppins', sans-serif; cursor: pointer; transition: background 0.3s;
+  }
+  .btn-tutup:hover { background: #7b68ee; }
+
+  .cake-section {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.5);
+    text-align: center; z-index: 15; opacity: 0; pointer-events: none;
+    transition: all 0.6s ease; display: flex; flex-direction: column; align-items: center;
+  }
+
+  .cake-section.show { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+  .cake-section.hide { opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(1.5); transition: all 0.5s ease; }
+
+  .cake-icon { font-size: 120px; animation: goyangKue 2s infinite; cursor: pointer; transition: transform 0.2s; }
+  .cake-icon:hover { transform: scale(1.1) rotate(5deg); }
+  
+  @keyframes goyangKue { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(3deg); } }
+  .lilin-api { font-size: 40px; animation: kedipApi 0.5s infinite alternate; margin-top: -10px; }
+  @keyframes kedipApi { 0% { opacity: 0.8; } 100% { opacity: 1; transform: scale(1.1); } }
+  .padam .lilin-api { display: none; }
+
+  .instruksi-kue { font-size: 16px; font-weight: 600; color: #4b0082; margin-top: 15px; animation: kedip 1.5s infinite alternate; }
+  @keyframes kedip { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+
+  .wish-container {
+    position: absolute; top: 25%; left: 50%; transform: translateX(-50%) translateY(20px);
+    text-align: center; z-index: 30; opacity: 0; pointer-events: none; transition: all 0.8s ease;
+    display: flex; flex-direction: column; align-items: center; width: 100%;
+  }
+
+  .wish-container.show { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+
+  .wish-title {
+    font-family: 'Playfair Display', serif; font-size: 32px; color: #7b68ee; font-style: italic;
+  }
+
+  .btn-final {
+    margin-top: 15px; background: #ffd700; color: #4b0082; border: none; padding: 10px 25px;
+    border-radius: 20px; font-weight: bold; font-family: 'Poppins', sans-serif; cursor: pointer;
+    box-shadow: 0 4px 10px rgba(255, 215, 0, 0.4); transition: 0.3s; animation: munculBawah 1s ease;
+  }
+  .btn-final:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(255, 215, 0, 0.6); }
+  @keyframes munculBawah { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  .final-letter {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -40%) scale(0.8);
+    width: 90%; max-width: 450px; background: #fffcf9; border-radius: 15px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4); z-index: 50; opacity: 0; pointer-events: none;
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center; border: 2px dashed #ffb6c1;
+    padding: 30px 25px; display: flex; flex-direction: column; max-height: 85vh;
+  }
+
+  .final-letter.show { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+
+  .final-letter h1 { font-family: 'Playfair Display', serif; font-size: 28px; color: #d81b60; margin-top: 0; font-style: italic; }
+  .final-letter p { font-size: 14px; color: #5d4037; line-height: 1.8; text-align: left; margin-bottom: 15px; }
+  .final-letter b { color: #d81b60; }
+  
+  .scroll-area { overflow-y: auto; padding-right: 10px; margin-bottom: 15px; }
+  .scroll-area::-webkit-scrollbar { width: 6px; }
+  .scroll-area::-webkit-scrollbar-thumb { background: #e6e6fa; border-radius: 10px; }
+
+  .confetti { position: fixed; width: 10px; height: 10px; animation: jatuh 3s linear forwards; z-index: 25; top: -10px; }
+  @keyframes jatuh { 0% { transform: translateY(0) rotate(0); opacity: 1; } 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
+  
+  .floating-heart { position: fixed; bottom: -50px; font-size: 24px; animation: melayangKeAtas 4s linear forwards; z-index: 26; pointer-events: none; }
+  @keyframes melayangKeAtas { 0% { transform: translateY(0) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-110vh) scale(1.2); opacity: 0; } }
+</style>
+</head>
+<body>
+
+  <div class="balloon b1"></div><div class="balloon b2"></div><div class="balloon b3"></div><div class="balloon b4"></div><div class="balloon b5"></div>
+
+  <div class="gift-container" id="kado" onclick="bukaKado()">
+    <div class="bow">🎀</div><div class="box"></div><div class="lid"></div>
+  </div>
+  <div class="instruksi" id="teksKlik" style="position: absolute; bottom: 50px; font-size: 14px; font-weight: 600; color: #4b0082; z-index: 10; animation: kedip 1.5s infinite alternate;">Klik kadonya, Dedek! </div>
+
+  <div class="ticket-card" id="kartu">
+    <div class="ticket-header"><h1>Happy Sweet 17, Aruna!</h1></div>
+    <div class="ticket-body">
+      <div class="ticket-fotos">
+        <img src="hamin.jpg" alt="KarNing">
+        <img src="hbd.jpg" alt="Ningning">
+      </div>
+      <div class="ticket-text">
+        <p>Selamat ulang tahun yang ke-17, Dedek sayang! </p>
+        <p>Bunda bener-bener <b>seneng banget</b> bisa ketemu dan nemenin Dedek sampai di hari yang spesial ini.</p>
+        <p>Semoga di umur yang baru ini, Dedek selalu dikasih kesehatan, kebahagiaan, dan dilancarkan semua urusannya. Jangan pernah takut buat mimpi yang tinggi ya, Bunda selalu dukung Dedek!</p>
+        <div class="ttd">With love,<br>Bunda Rhea</div>
+      </div>
+    </div>
+    <button class="btn-tutup" onclick="tutupKado()">Tutup Kado </button>
+  </div>
+
+  <div class="cake-section" id="areaKue">
+    <div class="cake-icon" id="kue" onclick="tiupLilin()">
+      🎂<div class="lilin-api">🔥🕯️🔥</div>
+    </div>
+    <div class="instruksi-kue" id="teksTiup">Make a wish dulu, Dedek! <br><span style="font-size: 12px; color: #666;">(Klik kuenya buat tiup lilin)</span></div>
+  </div>
+
+  <div class="wish-container" id="wishContainer">
+    <div class="wish-title">Wish Granted! <br><span style="font-size: 20px; font-family: 'Poppins'; font-style: normal; color: #4b0082;">Happy Sweet 17, Aruna! </span></div>
+    <button class="btn-final" id="btnFinal" onclick="bukaPesanTerakhir()" style="display: none;">Buka Pesan Terakhir </button>
+  </div>
+
+  <div class="final-letter" id="suratFinal">
+    <h1>Untuk Dedek Tersayang</h1>
+    <div class="scroll-area">
+      <p>Dedek Aruna, <b>Sweet Seventeen</b> ya! </p>
+      <p>Bunda mungkin ga bisa beri kado sebuah barang, tapi Bunda mau Dedek tau kalau Bunda bakal selalu ada buat Dedek. Di umur 17 ini, Dedek udah makin dewasa, makin hebat, dan makin cantik.</p>
+      <p>Jangan pernah ragu sama diri sendiri ya, Dedek. Kalau ada masalah, cerita ke Bunda. Kalau lagi capek, istirahat. Bunda bakal selalu jadi *support system* nomor satu buat Dedek.</p>
+      <p>Semoga semua doa dan impian Dedek di umur 17 ini bisa terkabul satu per satu. Tetap jadi Aruna yang ceria dan bikin bangga! </p>
+      <p>I love you more than words can say, Dedek. </p>
+    </div>
+    <div class="ttd" style="font-family: 'Playfair Display'; font-style: italic; color: #d81b60; font-size: 22px;">With love,<br>Bunda Rhea</div>
+    <button class="btn-tutup" style="background: #ffb6c1; margin-top: 15px; border-radius: 10px;" onclick="tutupSuratFinal()">Tutup Surat</button>
+  </div>
+
+<script>
+  const kado = document.getElementById('kado');
+  const kartu = document.getElementById('kartu');
+  const teksKlik = document.getElementById('teksKlik');
+  const areaKue = document.getElementById('areaKue');
+  const kue = document.getElementById('kue');
+  const teksTiup = document.getElementById('teksTiup');
+  const wishContainer = document.getElementById('wishContainer');
+  const btnFinal = document.getElementById('btnFinal');
+  const suratFinal = document.getElementById('suratFinal');
+
+  function bukaKado() {
+    kado.classList.add('open');
+    teksKlik.style.opacity = '0'; 
+    setTimeout(() => { kartu.classList.add('show'); }, 500);
+  }
+
+  function tutupKado() {
+    kartu.classList.remove('show'); 
+    setTimeout(() => { kado.classList.add('hide'); teksKlik.style.display = 'none'; }, 400);
+    setTimeout(() => { areaKue.classList.add('show'); }, 1000);
+  }
+
+  function tiupLilin() {
+    if (!kue.classList.contains('padam')) {
+      kue.classList.add('padam'); 
+      teksTiup.style.opacity = '0'; 
+      
+      buatKonfeti(); 
+
+      setTimeout(() => {
+        wishContainer.classList.add('show');
+        setTimeout(() => { btnFinal.style.display = 'block'; }, 1500);
+      }, 500);
+    }
+  }
+
+  function bukaPesanTerakhir() {
+    areaKue.classList.add('hide');
+    wishContainer.classList.remove('show');
+
+    setTimeout(() => {
+      suratFinal.classList.add('show');
+    }, 500);
+  }
+
+  function tutupSuratFinal() {
+    suratFinal.classList.remove('show');
+  }
+
+  function buatKonfeti() {
+    const warna = ['#b19cd9', '#ffd700', '#9370db', '#e6e6fa', '#dda0dd', '#fff'];
+    for (let i = 0; i < 80; i++) {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.backgroundColor = warna[Math.floor(Math.random() * warna.length)];
+      confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      confetti.style.animationDelay = Math.random() * 0.5 + 's';
+      if (Math.random() > 0.5) confetti.style.borderRadius = '50%';
+      document.body.appendChild(confetti);
+      setTimeout(() => { confetti.remove(); }, 4000);
+    }
+    for (let i = 0; i < 20; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('floating-heart');
+      heart.innerText = ['💜', '💖', '✨'][Math.floor(Math.random() * 3)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+      heart.style.animationDelay = Math.random() * 1 + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => { heart.remove(); }, 5000);
+    }
+  }
+</script>
+</body>
+</html>
